@@ -1,0 +1,2 @@
+# dev-requirements.txt (for development/testing)
+pytest
