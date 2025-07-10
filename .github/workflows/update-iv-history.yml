@@ -1,0 +1,31 @@
+name: Update IV History
+
+on:
+  schedule:
+    # At 18:00 Mendoza time every day
+    - cron:  '0 21 * * *'   # UTC 21:00 = 18:00 America/Mendoza
+  workflow_dispatch:       # also allows manual run
+
+jobs:
+  fetch-iv:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL:   ${{ secrets.DATABASE_URL }}
+      ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run IV History Fetcher
+        run: |
+          python -m app.services.iv_fetcher
