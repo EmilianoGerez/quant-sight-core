@@ -28,4 +28,4 @@ jobs:
 
       - name: Run IV History Fetcher
         run: |
-          python -m app.services.iv_fetcher
+          python -m app.services.iv_history_builder
